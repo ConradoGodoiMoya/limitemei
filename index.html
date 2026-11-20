@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limite do MEI</title>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE: fintech confiante e clara — avisa cedo, sem alarme
+   IDEA: uma linha de metrô atravessa o site; o faturamento é o trem e o limite é a estação
+   PICTURE: celular no topo com o trem correndo e mudando de verde para âmbar e vermelho
+   COLOUR and TYPE: noite #0b0e13, âmbar #ffb400 da marca, verde/vermelho de status; Figtree 900 + Figtree
+   LAYOUT: nav fixa, hero escuro com celular, calculadora em faixa clara, passos em trilho, regras, premium, FAQ, rodapé */
+:root{color-scheme:light dark;--bg:light-dark(#fff,#0b0e13);--soft:light-dark(#f5f6f9,#12161d);--card:light-dark(#fff,#161b24);--ink:light-dark(#0f1218,#eef1f6);--mute:light-dark(#5d6474,#98a1b1);--line:light-dark(#e4e7ee,#252b36);--night:#0b0e13;--amb:#ffb400;--grn:#00a862;--red:#e8352c;--blu:#2f6bff;--st:var(--grn);--sh:0 1px 2px rgba(0,0,0,.06),0 12px 32px -12px rgba(15,18,24,.18)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Figtree,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(5vw,18px)}
+.band{padding:clamp(56px,8vw,112px) 0}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(38px,6.2vw,68px);line-height:1.02;font-weight:900}
+h2{font-size:clamp(30px,4.2vw,46px);line-height:1.06;font-weight:900}
+h3{font-size:19px;font-weight:800;line-height:1.25}
+.lead{font-size:clamp(17px,1.6vw,20px);color:var(--mute);max-width:56ch;margin:18px 0 0}
+.kick{display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:14px;color:var(--mute);margin-bottom:14px}
+.kick i{width:22px;height:6px;border-radius:3px;background:var(--amb)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:14px;font:800 16px Figtree,system-ui,sans-serif;text-decoration:none;border:0;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.amb{background:var(--amb);color:#111;box-shadow:0 10px 30px -10px rgba(255,180,0,.7)}
+.btn.ghost{background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22)}
+.btn.dark{background:var(--ink);color:var(--bg)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--blu);outline-offset:3px}
+/* nav */
+nav{position:fixed;inset:0 0 auto;z-index:20;transition:background .3s,box-shadow .3s}
+nav.solid{background:color-mix(in srgb,var(--night) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+nav .wrap{display:flex;align-items:center;gap:24px;height:72px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;color:#fff;text-decoration:none;font-size:18px;white-space:nowrap}
+.mark{position:relative;width:34px;height:10px;border-radius:5px;background:rgba(255,255,255,.25)}
+.mark::before{content:"";position:absolute;inset:0 40% 0 0;border-radius:5px;background:var(--amb)}
+.mark::after{content:"";position:absolute;right:6px;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--night);border:4px solid #fff}
+.links{display:flex;gap:22px;margin-left:auto}
+.links a{color:rgba(255,255,255,.75);text-decoration:none;font-weight:600;font-size:15px;transition:color .2s}
+.links a:hover{color:#fff}
+nav .btn{min-height:42px;padding:0 18px;font-size:15px}
+/* hero */
+.hero{background:radial-gradient(1200px 600px at 80% 10%,#1b2433 0,transparent 60%),var(--night);color:#fff;padding:140px 0 0;overflow:hidden}
+.hero .grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center}
+.hero h1 em{font-style:normal;color:var(--amb)}
+.hero .lead{color:rgba(255,255,255,.72)}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.trust{margin-top:22px;font-size:14px;color:rgba(255,255,255,.55)}
+.phone{justify-self:center;width:min(340px,100%);aspect-ratio:9/18.5;border-radius:44px;background:#161b24;padding:14px;box-shadow:0 0 0 1.5px rgba(255,255,255,.12),0 40px 80px -30px rgba(0,0,0,.8),0 0 120px -40px rgba(255,180,0,.35);transform:rotate(-3deg);animation:float 7s ease-in-out infinite}
+@keyframes float{50%{transform:rotate(-3deg) translateY(-12px)}}
+.scr{height:100%;border-radius:32px;background:#fff;color:#0f1218;padding:22px 18px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.scr .top{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#8a91a0}
+.scr .stat{border-radius:16px;padding:14px;background:#f5f6f9;border-left:7px solid var(--hc,var(--grn));transition:border-color .4s}
+.scr .stat b{display:block;font-size:17px;line-height:1.2;color:var(--hc,var(--grn));transition:color .4s}
+.scr .stat span{font-size:12px;color:#5d6474}
+.big{font-size:34px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mini{position:relative;height:60px;margin:6px 4px 0}
+.mini .r{position:absolute;left:0;right:0;top:24px;height:10px;border-radius:5px;background:#e4e7ee}
+.mini .f{position:absolute;left:0;top:24px;height:10px;border-radius:5px;background:var(--hc,var(--grn))}
+.mini .s{position:absolute;top:19px;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:#fff;border:4px solid #0f1218}
+.mini .s small{position:absolute;top:22px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:#5d6474;white-space:nowrap}
+.bars{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;align-items:end;height:90px;margin-top:auto}
+.bars i{border-radius:4px 4px 2px 2px;background:#e4e7ee;transition:height .5s,background .4s}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:72px;border-top:1px solid rgba(255,255,255,.1)}
+.stats div{padding:28px 0;border-right:1px solid rgba(255,255,255,.1);padding-left:24px}
+.stats div:first-child{padding-left:0}.stats div:last-child{border:0}
+.stats strong{display:block;font-size:clamp(28px,3.4vw,40px);font-weight:900;color:#fff;font-variant-numeric:tabular-nums}
+.stats span{font-size:14px;color:rgba(255,255,255,.6)}
+/* calculadora */
+.calc{background:var(--soft)}
+.app{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:24px;margin-top:40px}
+.panel{background:var(--card);border-radius:24px;padding:clamp(20px,3vw,32px);box-shadow:var(--sh);border:1px solid var(--line)}
+.status{border-radius:16px;padding:18px 20px;background:var(--soft);border-left:8px solid var(--st);transition:border-color .5s}
+.status b.t{display:block;font-size:22px;line-height:1.2;font-weight:900;color:var(--st);transition:color .5s}
+.status p{margin:6px 0 0;color:var(--mute)}
+.track{position:relative;height:150px;margin:24px 8px 0}
+.rail{position:absolute;left:0;right:0;top:56px;height:14px;border-radius:7px;background:var(--line)}
+.fill{position:absolute;left:0;top:56px;height:14px;border-radius:7px;background:var(--st);transition:width .7s cubic-bezier(.2,.8,.2,1),background .5s}
+.proj{position:absolute;top:56px;height:14px;border-radius:7px;background:repeating-linear-gradient(90deg,var(--st) 0 8px,transparent 8px 14px);opacity:.4;transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.stn{position:absolute;top:49px;width:28px;height:28px;margin-left:-14px;border-radius:50%;background:var(--card);border:6px solid var(--ink);transition:left .7s cubic-bezier(.2,.8,.2,1)}
+.stn span{position:absolute;top:34px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:13px;color:var(--mute);text-align:center;line-height:1.25}
+.stn span b{display:block;color:var(--ink);font-size:14px}
+.stn.lo span{top:70px}.stn.lo::after{content:"";position:absolute;left:50%;top:22px;width:2px;height:44px;background:var(--line)}
+.train{position:absolute;top:0;transform:translateX(-50%);background:var(--st);color:#fff;font-weight:900;font-size:15px;padding:6px 12px;border-radius:10px;white-space:nowrap;transition:left .7s cubic-bezier(.2,.8,.2,1),background .5s;font-variant-numeric:tabular-nums;box-shadow:0 8px 20px -8px var(--st)}
+.train::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:var(--st)}
+.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px}
+.num{background:var(--soft);border-radius:14px;padding:14px 16px}
+.num small{display:block;color:var(--mute);font-size:13px;font-weight:600}
+.num strong{font-size:clamp(20px,2.4vw,26px);font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
+label{display:block;font-size:13px;color:var(--mute);font-weight:700;margin-bottom:4px}
+select,input{font:16px Figtree,system-ui,sans-serif;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;min-height:46px;padding:8px 12px;width:100%;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus{border-color:var(--blu);box-shadow:0 0 0 4px color-mix(in srgb,var(--blu) 18%,transparent);outline:0}
+.cfg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.months{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.m input{text-align:right;font-variant-numeric:tabular-nums}
+.m.off{opacity:.35}.m.now label{color:var(--blu)}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+.row .btn{min-height:44px;padding:0 18px;font-size:15px}
+.btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.note{font-size:13px;color:var(--mute)}
+.prazos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.pz{background:var(--soft);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
+.pz .d{flex:none;width:58px;height:58px;border-radius:50%;border:5px solid var(--blu);display:grid;place-items:center;font-weight:900;font-size:18px;line-height:1;text-align:center}
+.pz .d small{display:block;font-size:10px;font-weight:700;color:var(--mute)}
+.pz h3{font-size:15px}.pz p{margin:2px 0 0;color:var(--mute);font-size:13px;line-height:1.4}
+/* passos */
+.steps{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:56px}
+.steps::before{content:"";position:absolute;left:28px;right:28px;top:27px;height:8px;border-radius:4px;background:var(--line)}
+.steps::after{content:"";position:absolute;left:28px;top:27px;height:8px;border-radius:4px;background:var(--amb);width:0;transition:width 1.6s cubic-bezier(.2,.8,.2,1) .2s}
+.steps.in::after{width:calc(100% - 56px)}
+.step{position:relative}
+.step .dot{position:relative;z-index:1;width:62px;height:62px;border-radius:50%;background:var(--bg);border:8px solid var(--ink);display:grid;place-items:center;font-weight:900;font-size:20px;margin-bottom:20px}
+.step p{color:var(--mute);margin:8px 0 0}
+/* regras */
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:44px}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:var(--sh);transition:transform .25s,box-shadow .25s}
+.rule:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(15,18,24,.35)}
+.rule .chip{display:inline-flex;font-weight:900;font-size:14px;padding:6px 12px;border-radius:999px;background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--c);margin-bottom:16px}
+.rule p{color:var(--mute);margin:8px 0 0}
+.rule .v{font-size:28px;font-weight:900;margin-top:14px;font-variant-numeric:tabular-nums}
+/* premium */
+.prem{background:var(--night);color:#fff;border-radius:32px;padding:clamp(28px,5vw,64px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center;position:relative;overflow:hidden}
+.prem::before{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,180,0,.28),transparent 65%)}
+.prem ul{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:12px}
+.prem li{display:flex;gap:12px;align-items:flex-start;color:rgba(255,255,255,.85)}
+.prem li::before{content:"";flex:none;width:22px;height:22px;margin-top:2px;border-radius:50%;background:var(--amb) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.price-card{position:relative;background:#161b24;border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:28px}
+.price{font-size:56px;font-weight:900;letter-spacing:-.03em;line-height:1}
+.price small{font-size:17px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:0}
+.tag{display:inline-block;font-size:13px;font-weight:800;background:rgba(255,180,0,.15);color:var(--amb);padding:5px 12px;border-radius:999px;margin-bottom:14px}
+.price-card .btn{width:100%;margin-top:22px}
+.msg{display:none;margin-top:16px;background:rgba(255,255,255,.07);border-radius:14px;padding:16px;font-size:15px}
+.msg.on{display:block;animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+/* faq */
+.faq{max-width:820px;margin:40px auto 0}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:22px 44px 22px 0;font-weight:800;font-size:18px;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";position:absolute;right:8px;top:50%;width:14px;height:14px;margin-top:-10px;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg);transition:transform .3s}
+details[open] summary::after{transform:rotate(225deg);margin-top:-2px}
+details p{margin:0 0 22px;color:var(--mute);max-width:68ch}
+footer{background:var(--night);color:rgba(255,255,255,.6);padding:48px 0;font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+.center{text-align:center}.center .lead{margin-inline:auto}
+/* reveal */
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+@media(max-width:900px){.links{display:none}.hero .grid,.app,.prem{grid-template-columns:1fr}.phone{margin-top:12px}.rules{grid-template-columns:1fr}}
+@media(max-width:640px){.steps{grid-template-columns:1fr}.steps::before,.steps::after{left:27px;right:auto;top:28px;bottom:28px;width:8px;height:auto}.steps::after{height:0;transition:height 1.6s cubic-bezier(.2,.8,.2,1) .2s}.steps.in::after{width:8px;height:calc(100% - 56px)}.step{padding-left:84px}.step .dot{position:absolute;left:0;top:0}
+.stats{grid-template-columns:1fr}.stats div{border-right:0;border-bottom:1px solid rgba(255,255,255,.1);padding-left:0}.prazos,.cfg{grid-template-columns:1fr}.months{grid-template-columns:repeat(2,minmax(0,1fr))}nav .btn{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.js .rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav id="nav"><div class="wrap">
+  <a class="logo" href="#topo"><span class="mark"></span>Limite do MEI</a>
+  <div class="links"><a href="#calculadora">Calculadora</a><a href="#como">Como funciona</a><a href="#regras">Regras</a><a href="#premium">Premium</a><a href="#faq">Dúvidas</a></div>
+  <a class="btn amb" href="#calculadora">Calcular grátis</a>
+</div></nav>
+
+<header class="hero" id="topo">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="kick rv" style="color:rgba(255,255,255,.6)"><i></i>Calculadora grátis para MEI</div>
+        <h1 class="rv d1">Saiba antes da Receita se o seu MEI vai <em>estourar o limite</em>.</h1>
+        <p class="lead rv d2">Anote quanto entrou em cada mês. A gente mostra quanto você ainda pode faturar, em que mês o limite estoura e o que fazer antes disso.</p>
+        <div class="cta rv d3"><a class="btn amb" href="#calculadora">Calcular agora</a><a class="btn ghost" href="#como">Como funciona</a></div>
+        <p class="trust rv d3">Sem cadastro. Seus números ficam só no seu aparelho.</p>
+      </div>
+      <div class="phone rv d2" aria-hidden="true"><div class="scr" id="demo">
+        <div class="top"><span>Limite do MEI</span><span id="hMes">jan</span></div>
+        <div class="stat"><b id="hT">Tudo certo</b><span id="hP">Dentro do limite</span></div>
+        <div><span style="font-size:12px;color:#5d6474;font-weight:700">Faturado no ano</span><div class="big" id="hV">R$ 0</div></div>
+        <div class="mini"><div class="r"></div><div class="f" id="hF"></div><div class="s" style="left:76.9%"><small>R$ 81 mil</small></div></div>
+        <div class="bars" id="hB"></div>
+      </div></div>
+    </div>
+    <div class="stats">
+      <div class="rv"><strong data-count="570" data-suf=" mil">0</strong><span>MEIs desenquadrados pela Receita por excesso de faturamento em 2024</span></div>
+      <div class="rv d1"><strong data-count="17" data-suf=" milhões">0</strong><span>de MEIs ativos no Brasil em 2026</span></div>
+      <div class="rv d2"><strong data-count="81" data-pre="R$ " data-suf=" mil">0</strong><span>é o limite de faturamento anual hoje</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="band calc" id="calculadora"><div class="wrap">
+  <div class="kick rv"><i></i>Calculadora</div>
+  <h2 class="rv d1">Quanto falta para o seu limite?</h2>
+  <p class="lead rv d2">Preencha os meses que você lembra. A conta se atualiza enquanto você digita.</p>
+  <div class="app">
+    <div class="panel rv">
+      <div class="status" id="status"><b class="t">Calculando…</b></div>
+      <div class="track" aria-hidden="true">
+        <div class="rail"></div><div class="proj" id="ghost"></div><div class="fill" id="fill"></div>
+        <div class="stn" style="left:0"><span><b>R$ 0</b>início</span></div>
+        <div class="stn" id="s100"><span><b id="s100v"></b>limite</span></div>
+        <div class="stn lo" id="s120"><span><b id="s120v"></b>+20%</span></div>
+        <div class="train" id="train"></div>
+      </div>
+      <div class="nums">
+        <div class="num"><small>Faturado no ano</small><strong id="nTotal"></strong></div>
+        <div class="num"><small>Seu limite este ano</small><strong id="nLim"></strong></div>
+        <div class="num"><small>Ainda pode faturar</small><strong id="nRest"></strong></div>
+        <div class="num"><small>Média segura por mês</small><strong id="nMes"></strong></div>
+      </div>
+      <div class="prazos">
+        <div class="pz"><div class="d" id="dasD"></div><div><h3>Guia DAS</h3><p id="dasT"></p></div></div>
+        <div class="pz"><div class="d" id="dasnD"></div><div><h3>Declaração anual</h3><p id="dasnT"></p></div></div>
+      </div>
+    </div>
+    <div class="panel rv d1">
+      <div class="cfg">
+        <div><label for="abertura">Quando abriu o MEI</label><select id="abertura"></select></div>
+        <div><label for="teto">Limite anual</label><select id="teto"><option value="81000">R$ 81 mil (regra atual)</option><option value="110000">R$ 110 mil (proposta 2027)</option></select></div>
+      </div>
+      <div class="months" id="months"></div>
+      <div class="row"><button class="btn dark" id="exemplo">Ver um exemplo</button><button class="btn line" id="limpar">Limpar</button><span class="note" id="salvo"></span></div>
+      <p class="note">Some tudo o que entrou pela empresa: Pix, cartão, dinheiro e marketplaces.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="como"><div class="wrap">
+  <div class="kick rv"><i></i>Como funciona</div>
+  <h2 class="rv d1">Três passos, menos de um minuto.</h2>
+  <div class="steps" id="steps">
+    <div class="step rv"><div class="dot">1</div><h3>Anote seus meses</h3><p>Coloque quanto entrou em cada mês, somando Pix, cartão e dinheiro.</p></div>
+    <div class="step rv d1"><div class="dot">2</div><h3>Veja seu ritmo</h3><p>A calculadora projeta o fim do ano e mostra em que mês o limite estoura.</p></div>
+    <div class="step rv d2"><div class="dot">3</div><h3>Aja antes</h3><p>Saiba quanto ainda pode faturar por mês ou se é hora de virar Microempresa.</p></div>
+  </div>
+</div></section>
+
+<section class="band" id="regras" style="background:var(--soft)"><div class="wrap">
+  <div class="kick rv"><i></i>Regras</div>
+  <h2 class="rv d1">O que acontece se passar do limite.</h2>
+  <div class="rules">
+    <div class="rule rv" style="--c:var(--grn)"><span class="chip">Dentro do limite</span><h3>Tudo certo</h3><p>Continua MEI pagando só o DAS mensal.</p><div class="v">até R$ 81.000</div></div>
+    <div class="rule rv d1" style="--c:#d99a00"><span class="chip">Até 20% acima</span><h3>Guia extra</h3><p>Paga um DAS complementar sobre o excesso e vira Microempresa em janeiro do ano seguinte.</p><div class="v">até R$ 97.200</div></div>
+    <div class="rule rv d2" style="--c:var(--red)"><span class="chip">Mais de 20% acima</span><h3>Retroativo</h3><p>Sai do MEI desde o início do ano e paga impostos atrasados como Microempresa. É preciso comunicar até o último dia útil do mês seguinte.</p><div class="v">acima de R$ 97.200</div></div>
+  </div>
+  <p class="note rv" style="margin-top:20px">Regras da Receita Federal para 2026. O limite de R$ 110 mil para 2027 ainda é um projeto de lei.</p>
+</div></section>
+
+<section class="band" id="premium"><div class="wrap">
+  <div class="prem rv">
+    <div style="position:relative">
+      <span class="tag">Em breve</span>
+      <h2>Premium: o app te avisa sozinho.</h2>
+      <ul>
+        <li>Lembrete todo mês no WhatsApp para anotar o faturamento</li>
+        <li>Alerta quando você chegar a 80% do limite</li>
+        <li>Aviso antes do vencimento do DAS e da declaração anual</li>
+        <li>Seus dados salvos em qualquer celular</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="price">R$ 9,90<small> /mês</small></div>
+      <p style="color:rgba(255,255,255,.65);margin:10px 0 0">Entre na lista de lançamento e ganhe o 1º mês grátis.</p>
+      <a class="btn amb" id="premBtn" href="#premium">Quero o Premium</a>
+      <div class="msg" id="premMsg">
+        <p style="margin:0 0 10px">Envie esta mensagem para quem te passou este app:</p>
+        <p style="margin:0 0 12px"><b id="premTxt"></b></p>
+        <button class="btn ghost" id="premCopy" style="min-height:44px">Copiar mensagem</button>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="faq" style="padding-top:0"><div class="wrap">
+  <div class="center"><div class="kick rv"><i></i>Dúvidas</div><h2 class="rv d1">Perguntas frequentes</h2></div>
+  <div class="faq rv d2">
+    <details><summary>É grátis mesmo?</summary><p>Sim. A calculadora é grátis e não pede cadastro. O Premium, com alertas automáticos, será opcional.</p></details>
+    <details><summary>Meus dados ficam salvos onde?</summary><p>Só no seu aparelho, no navegador. Ninguém mais vê seus números. Se limpar o navegador ou trocar de celular, eles somem.</p></details>
+    <details><summary>Abri o MEI este ano. Meu limite é menor?</summary><p>Sim. No ano de abertura o limite é proporcional: R$ 6.750 por mês de atividade, contando o mês de abertura inteiro. Escolha o mês em "Quando abriu o MEI" e a conta ajusta sozinha.</p></details>
+    <details><summary>O limite vai subir para R$ 110 mil?</summary><p>Existe um projeto de lei propondo R$ 110 mil em 2027, mas ele ainda não foi aprovado. Até mudar a lei, vale R$ 81 mil. Você pode testar os dois limites na calculadora.</p></details>
+    <details><summary>Isso substitui um contador?</summary><p>Não. A calculadora é uma estimativa para você se planejar. Se estiver perto do limite ou já tiver passado, procure um contador.</p></details>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <a class="logo" href="#topo"><span class="mark"></span>Limite do MEI</a>
+  <span>Estimativa com base nas regras da Receita Federal para 2026. Não substitui orientação contábil.</span>
+</div></footer>
+
+<script>
+{
+document.documentElement.classList.add('js');
+const MES=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MESL=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const hoje=new Date(),ANO=hoje.getFullYear(),MNOW=hoje.getMonth();
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+const $=id=>document.getElementById(id);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const KEY='limite-mei-v1';
+let st={ab:-1,teto:81000,v:Array(12).fill('')};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.v))st=s}catch(e){}
+
+/* nav */
+const nav=$('nav');const onScroll=()=>nav.classList.toggle('solid',scrollY>20);addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* reveal + contadores */
+const countUp=el=>{const n=+el.dataset.count,pre=el.dataset.pre||'',suf=el.dataset.suf||'';if(reduce){el.textContent=pre+n+suf;return}const t0=performance.now();const tick=t=>{const p=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-p,3);el.textContent=pre+Math.round(n*e)+suf;if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)};
+const items=document.querySelectorAll('.rv,#steps,[data-count]');
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(e.target.dataset.count)countUp(e.target);io.unobserve(e.target)}}),{threshold:.15});items.forEach(el=>io.observe(el))}
+else items.forEach(el=>{el.classList.add('in');if(el.dataset.count)countUp(el)});
+
+/* demo do celular */
+const hB=$('hB');hB.innerHTML='<i></i>'.repeat(12);
+const vals=[6200,5900,7100,6800,7400,7900,8100,7600,8300,8700,9100,9400];
+let k=0;
+function demo(){
+  const m=k%13, sum=vals.slice(0,m).reduce((a,b)=>a+b,0), lim=81000;
+  const c=sum<lim*.8?'var(--grn)':sum<=lim?'#e0a000':'var(--red)';
+  $('demo').style.setProperty('--hc',c);
+  $('hV').textContent=brl(sum);
+  $('hF').style.width=Math.min(100,sum/(lim*1.3)*100)+'%';
+  $('hF').style.transition='width .6s cubic-bezier(.2,.8,.2,1)';
+  $('hMes').textContent=m?MES[m-1].toLowerCase():'jan';
+  $('hT').textContent=sum>lim?'Passou do limite':sum>=lim*.8?'Atenção: perto do limite':'Tudo certo';
+  $('hP').textContent=sum>lim?'Hora de falar com um contador':Math.round(sum/lim*100)+'% do limite usado';
+  [...hB.children].forEach((b,i)=>{b.style.height=(i<m?vals[i]/9400*100:8)+'%';b.style.background=i<m?c:'#e4e7ee'});
+  k++;
+}
+demo();if(!reduce)setInterval(demo,900);else{k=11;demo()}
+
+/* calculadora */
+$('abertura').innerHTML='<option value="-1">Antes de '+ANO+'</option>'+MES.map((m,i)=>'<option value="'+i+'">'+MESL[i]+' de '+ANO+'</option>').join('');
+$('months').innerHTML=MES.map((m,i)=>'<div class="m" id="m'+i+'"><label for="v'+i+'">'+m+(i===MNOW?' · agora':'')+'</label><input id="v'+i+'" inputmode="decimal" placeholder="R$ 0"></div>').join('');
+const num=s=>{s=String(s).replace(/[^\d,.-]/g,'');if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');const n=parseFloat(s);return isNaN(n)?0:n};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));$('salvo').textContent='Salvo neste aparelho'}catch(e){$('salvo').textContent=''}}
+
+function calc(){
+  const m0=Math.max(0,st.ab),ativos=12-m0,lim=st.teto/12*ativos,lim20=lim*1.2;
+  let total=0,cheios=0,ultimo=-1;
+  for(let i=m0;i<12;i++){if(st.v[i]!==''){total+=num(st.v[i]);cheios++;ultimo=i}}
+  const media=cheios?total/cheios:0;
+  const futuros=Math.max(0,11-Math.max(ultimo,MNOW-1));
+  const proj=total+media*futuros;
+  let estoura=-1,acc=0;
+  for(let i=m0;i<12;i++){acc+=st.v[i]!==''?num(st.v[i]):(i>ultimo?media:0);if(acc>lim){estoura=i;break}}
+  const rest=lim-total,porMes=futuros?rest/futuros:rest;
+  let cor,t,p;
+  if(!cheios){cor='var(--blu)';t='Preencha seus meses';p='Coloque quanto entrou em cada mês. Pode começar só pelos meses que você lembra.'}
+  else if(total>lim20){cor='var(--red)';t='Passou mais de 20% do limite';p='Você faturou '+brl(total-lim)+' acima do limite. Pelas regras, sai do MEI de forma retroativa e paga impostos atrasados. Procure um contador ainda este mês: o prazo para comunicar é o último dia útil do mês seguinte ao excesso.'}
+  else if(total>lim){cor='#d99a00';t='Passou do limite, mas dentro dos 20%';p='Você passou '+brl(total-lim)+'. Vai pagar um DAS complementar sobre esse valor e vira Microempresa em janeiro. Ainda pode faturar até '+brl(lim20-total)+' sem cair na regra pior.'}
+  else if(proj>lim){cor='var(--red)';t='No ritmo atual, você estoura em '+MESL[estoura];p='Sua média é '+brl(media)+' por mês. Para fechar o ano dentro do limite, mantenha no máximo '+brl(porMes)+' por mês daqui em diante, ou converse com um contador sobre virar Microempresa.'}
+  else if(total/lim>=.8){cor='#d99a00';t='Atenção: já usou '+Math.round(total/lim*100)+'% do limite';p='No ritmo atual você fecha o ano em '+brl(proj)+'. Dá para continuar, mas fique de olho mês a mês.'}
+  else{cor='var(--grn)';t='Tudo certo: você usou '+Math.round(total/lim*100)+'% do limite';p='No ritmo atual você fecha o ano em '+brl(proj)+', abaixo dos '+brl(lim)+'.'}
+  document.documentElement.style.setProperty('--st',cor);
+  $('status').innerHTML='<b class="t">'+t+'</b><p>'+p+'</p>';
+  const esc=lim*1.3,pc=v=>Math.min(100,v/esc*100)+'%';
+  $('fill').style.width=pc(total);$('ghost').style.width=pc(proj);
+  $('train').style.left=Math.max(6,Math.min(94,total/esc*100))+'%';$('train').textContent=brl(total);
+  $('s100').style.left=pc(lim);$('s100v').textContent=brl(lim);
+  $('s120').style.left=pc(lim20);$('s120v').textContent=brl(lim20);
+  $('nTotal').textContent=brl(total);$('nLim').textContent=brl(lim);
+  $('nRest').textContent=rest>0?brl(rest):'R$ 0';$('nMes').textContent=rest>0&&cheios?brl(porMes):'—';
+  for(let i=0;i<12;i++){const el=$('m'+i),inp=$('v'+i);el.classList.toggle('off',i<m0);el.classList.toggle('now',i===MNOW);inp.disabled=i<m0}
+}
+
+function prazos(){
+  const d0=new Date(ANO,MNOW,hoje.getDate());
+  let das=new Date(ANO,MNOW,20);if(d0>das)das=new Date(ANO,MNOW+1,20);
+  let dasn=new Date(ANO,4,31);if(d0>dasn)dasn=new Date(ANO+1,4,31);
+  const dias=x=>Math.round((x-d0)/864e5);
+  const fmt=x=>x.toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'});
+  $('dasD').innerHTML=dias(das)+'<small>dias</small>';$('dasT').textContent='Vence em '+fmt(das)+'. Atraso gera multa e juros.';
+  $('dasnD').innerHTML=dias(dasn)+'<small>dias</small>';$('dasnT').textContent='Até '+fmt(dasn)+', sobre '+(dasn.getFullYear()-1)+'.';
+}
+
+/* Coloque aqui seu WhatsApp com DDD, só números. Ex.: '5518999999999' */
+const WHATS='5518997139981';
+const premTxt='Oi! Quero entrar na lista do Premium do app Limite do MEI.';
+$('premTxt').textContent=premTxt;
+if(WHATS){$('premBtn').href='https://wa.me/'+WHATS+'?text='+encodeURIComponent(premTxt);$('premBtn').target='_blank'}
+else $('premBtn').addEventListener('click',e=>{e.preventDefault();$('premMsg').classList.add('on')});
+$('premCopy').addEventListener('click',()=>{navigator.clipboard.writeText(premTxt).then(()=>{$('premCopy').textContent='Copiado!'}).catch(()=>{$('premCopy').textContent='Selecione e copie o texto acima'})});
+
+function fill(){$('abertura').value=st.ab;$('teto').value=st.teto;for(let i=0;i<12;i++)$('v'+i).value=st.v[i];calc()}
+$('abertura').addEventListener('change',e=>{st.ab=+e.target.value;save();calc()});
+$('teto').addEventListener('change',e=>{st.teto=+e.target.value;save();calc()});
+for(let i=0;i<12;i++)$('v'+i).addEventListener('input',e=>{st.v[i]=e.target.value.trim();save();calc()});
+$('exemplo').addEventListener('click',()=>{const ex=[6200,5900,7100,6800,7400,7900,8100,7600,8300,8700,'',''];st={ab:-1,teto:81000,v:ex.map((x,i)=>i<=MNOW&&x!==''?String(x):'')};save();fill()});
+$('limpar').addEventListener('click',()=>{st={ab:-1,teto:81000,v:Array(12).fill('')};save();fill()});
+prazos();fill();
+}
+</script>
+</body>
+</html>
