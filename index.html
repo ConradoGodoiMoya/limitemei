@@ -255,23 +255,31 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;
 <section class="band" id="premium"><div class="wrap">
   <div class="prem rv">
     <div style="position:relative">
-      <span class="tag">Em breve</span>
-      <h2>Premium: o app te avisa sozinho.</h2>
+      <span class="tag">Premium</span>
+      <h2>O app te avisa sozinho, no Telegram.</h2>
       <ul>
-        <li>Lembrete todo mês no WhatsApp para anotar o faturamento</li>
-        <li>Alerta quando você chegar a 80% do limite</li>
-        <li>Aviso antes do vencimento do DAS e da declaração anual</li>
-        <li>Seus dados salvos em qualquer celular</li>
+        <li>Pergunta seu faturamento todo dia 1º. É só responder: /mes 7400</li>
+        <li>Alerta quando você chegar a 80% do limite ou for estourar no ritmo atual</li>
+        <li>Lembrete do DAS todo mês e da declaração anual em maio</li>
+        <li>Seus dados salvos na nuvem, em qualquer celular</li>
       </ul>
     </div>
     <div class="price-card">
-      <div class="price">R$ 9,90<small> /mês</small></div>
-      <p style="color:rgba(255,255,255,.65);margin:10px 0 0">Entre na lista de lançamento e ganhe o 1º mês grátis.</p>
-      <a class="btn amb" id="premBtn" href="#premium">Quero o Premium</a>
-      <div class="msg" id="premMsg">
-        <p style="margin:0 0 10px">Envie esta mensagem para quem te passou este app:</p>
-        <p style="margin:0 0 12px"><b id="premTxt"></b></p>
-        <button class="btn ghost" id="premCopy" style="min-height:44px">Copiar mensagem</button>
+      <div id="premBuy">
+        <div class="price">R$ 9,90<small> /mês</small></div>
+        <p style="color:rgba(255,255,255,.65);margin:10px 0 0">Cancele quando quiser. Pagamento seguro pela Stripe.</p>
+        <a class="btn amb" id="premBtn" href="#premium">Assinar o Premium</a>
+        <p class="note" style="color:rgba(255,255,255,.55);margin:14px 0 0">Dúvidas? <a id="waLink" href="#" target="_blank" rel="noopener">Fale no WhatsApp</a></p>
+      </div>
+      <div id="premOk" hidden>
+        <div class="price" style="font-size:38px">Premium ativo ✓</div>
+        <p id="premOkTxt" style="color:rgba(255,255,255,.7);margin:10px 0 0">Falta só um passo: ative os alertas no Telegram.</p>
+        <a class="btn amb" id="tgBtn" href="#" target="_blank" rel="noopener">Ativar no Telegram</a>
+        <p class="note" style="color:rgba(255,255,255,.55);margin:14px 0 0">Seus meses agora ficam salvos na nuvem automaticamente.</p>
+      </div>
+      <div id="premWait" hidden>
+        <div class="price" style="font-size:30px">Confirmando seu pagamento…</div>
+        <p style="color:rgba(255,255,255,.65);margin:10px 0 0">Isso leva alguns segundos. Não feche esta página.</p>
       </div>
     </div>
   </div>
@@ -284,6 +292,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;
     <details><summary>Meus dados ficam salvos onde?</summary><p>Só no seu aparelho, no navegador. Ninguém mais vê seus números. Se limpar o navegador ou trocar de celular, eles somem.</p></details>
     <details><summary>Abri o MEI este ano. Meu limite é menor?</summary><p>Sim. No ano de abertura o limite é proporcional: R$ 6.750 por mês de atividade, contando o mês de abertura inteiro. Escolha o mês em "Quando abriu o MEI" e a conta ajusta sozinha.</p></details>
     <details><summary>O limite vai subir para R$ 110 mil?</summary><p>Existe um projeto de lei propondo R$ 110 mil em 2027, mas ele ainda não foi aprovado. Até mudar a lei, vale R$ 81 mil. Você pode testar os dois limites na calculadora.</p></details>
+    <details><summary>Como funciona o Premium e como cancelo?</summary><p>Você assina por R$ 9,90 por mês e ativa os alertas no Telegram com um toque. Para cancelar, mande /cancelar para o robô no Telegram e siga o link. Não há fidelidade.</p></details>
     <details><summary>Isso substitui um contador?</summary><p>Não. A calculadora é uma estimativa para você se planejar. Se estiver perto do limite ou já tiver passado, procure um contador.</p></details>
   </div>
 </div></section>
@@ -292,6 +301,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;
 <footer><div class="wrap">
   <a class="logo" href="#topo"><span class="mark"></span>Limite do MEI</a>
   <span>Estimativa com base nas regras da Receita Federal para 2026. Não substitui orientação contábil.</span>
+  <span><a href="/termos.html">Termos de uso</a> · <a href="/privacidade.html">Privacidade</a></span>
 </div></footer>
 
 <script>
@@ -339,7 +349,7 @@ demo();if(!reduce)setInterval(demo,900);else{k=11;demo()}
 $('abertura').innerHTML='<option value="-1">Antes de '+ANO+'</option>'+MES.map((m,i)=>'<option value="'+i+'">'+MESL[i]+' de '+ANO+'</option>').join('');
 $('months').innerHTML=MES.map((m,i)=>'<div class="m" id="m'+i+'"><label for="v'+i+'">'+m+(i===MNOW?' · agora':'')+'</label><input id="v'+i+'" inputmode="decimal" placeholder="R$ 0"></div>').join('');
 const num=s=>{s=String(s).replace(/[^\d,.-]/g,'');if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');const n=parseFloat(s);return isNaN(n)?0:n};
-function save(){try{localStorage.setItem(KEY,JSON.stringify(st));$('salvo').textContent='Salvo neste aparelho'}catch(e){$('salvo').textContent=''}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));$('salvo').textContent=premium?'Salvo na nuvem':'Salvo neste aparelho'}catch(e){$('salvo').textContent=''}sync()}
 
 function calc(){
   const m0=Math.max(0,st.ab),ativos=12-m0,lim=st.teto/12*ativos,lim20=lim*1.2;
@@ -380,13 +390,56 @@ function prazos(){
   $('dasnD').innerHTML=dias(dasn)+'<small>dias</small>';$('dasnT').textContent='Até '+fmt(dasn)+', sobre '+(dasn.getFullYear()-1)+'.';
 }
 
-/* Coloque aqui seu WhatsApp com DDD, só números. Ex.: '5518999999999' */
+/* ---------- Premium ---------- */
 const WHATS='5518997139981';
-const premTxt='Oi! Quero entrar na lista do Premium do app Limite do MEI.';
-$('premTxt').textContent=premTxt;
-if(WHATS){$('premBtn').href='https://wa.me/'+WHATS+'?text='+encodeURIComponent(premTxt);$('premBtn').target='_blank'}
-else $('premBtn').addEventListener('click',e=>{e.preventDefault();$('premMsg').classList.add('on')});
-$('premCopy').addEventListener('click',()=>{navigator.clipboard.writeText(premTxt).then(()=>{$('premCopy').textContent='Copiado!'}).catch(()=>{$('premCopy').textContent='Selecione e copie o texto acima'})});
+const waUrl=t=>'https://wa.me/'+WHATS+'?text='+encodeURIComponent(t);
+$('waLink').href=waUrl('Oi! Tenho uma dúvida sobre o Premium do Limite do MEI.');
+const IDK='limite-mei-id';
+const rid=()=>{const a=new Uint8Array(18);crypto.getRandomValues(a);return [...a].map(b=>b.toString(16).padStart(2,'0')).join('')};
+let uid=null,premium=false,cfg={pagamento:false,bot:''};
+try{uid=localStorage.getItem(IDK)}catch(e){}
+const qs=new URLSearchParams(location.search);
+if(/^[a-zA-Z0-9_-]{16,64}$/.test(qs.get('id')||'')){uid=qs.get('id');try{localStorage.setItem(IDK,uid)}catch(e){}history.replaceState(null,'',location.pathname+location.hash)}
+function ensureId(){if(!uid){uid=rid();try{localStorage.setItem(IDK,uid)}catch(e){}}return uid}
+const api=(p,o)=>fetch(p,o).then(r=>r.ok?r.json():Promise.reject(r.status));
+
+function showPrem(state,linked){
+  $('premBuy').hidden=state!=='buy';$('premOk').hidden=state!=='ok';$('premWait').hidden=state!=='wait';
+  if(state==='ok'){
+    $('tgBtn').href=cfg.bot?'https://t.me/'+cfg.bot+'?start='+uid:'#';
+    $('premOkTxt').textContent=linked?'Seus alertas estão ativos no Telegram. Mande /status para o robô quando quiser.':'Falta só um passo: ative os alertas no Telegram.';
+    $('tgBtn').textContent=linked?'Abrir o Telegram':'Ativar no Telegram';
+  }
+}
+$('premBtn').addEventListener('click',e=>{
+  e.preventDefault();
+  if(cfg.pagamento) location.href='/api/checkout?id='+encodeURIComponent(ensureId());
+  else window.open(waUrl('Oi! Quero o Premium do app Limite do MEI.'),'_blank');
+});
+
+let syncT=null;
+function sync(){if(!premium||!uid)return;clearTimeout(syncT);syncT=setTimeout(()=>{api('/api/user',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:uid,ab:st.ab,teto:st.teto,v:st.v,year:ANO})}).catch(()=>{})},800)}
+
+async function initPrem(){
+  try{cfg=await api('/api/config')}catch(e){}
+  if(!uid){showPrem('buy');return}
+  const pago=qs.get('pago')==='1';
+  if(pago){showPrem('wait');history.replaceState(null,'',location.pathname);document.getElementById('premium').scrollIntoView()}
+  for(let i=0;i<(pago?10:1);i++){
+    try{
+      const r=await api('/api/user?id='+encodeURIComponent(uid));
+      if(r.premium){
+        premium=true;
+        if(r.data&&Array.isArray(r.data.v)&&r.data.year===ANO&&r.data.v.some(x=>x!=='')&&!st.v.some(x=>x!=='')){st={ab:r.data.ab,teto:r.data.teto,v:r.data.v};save();fill()}
+        else sync();
+        showPrem('ok',r.linked);return;
+      }
+    }catch(e){}
+    if(pago)await new Promise(r=>setTimeout(r,3000));
+  }
+  showPrem('buy');
+}
+initPrem();
 
 function fill(){$('abertura').value=st.ab;$('teto').value=st.teto;for(let i=0;i<12;i++)$('v'+i).value=st.v[i];calc()}
 $('abertura').addEventListener('change',e=>{st.ab=+e.target.value;save();calc()});
